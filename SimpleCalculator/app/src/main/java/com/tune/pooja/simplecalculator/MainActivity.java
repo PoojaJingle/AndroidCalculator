@@ -111,36 +111,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void initNumber(EditText editValues, String btn) {
+    private void initNumber(EditText editText, String newlySelected) {
 
-        // get the current number in the variable number and previous number in prev
-        double number = 0.0, prev = 0.0;
+      //Get the existing EditText value
 
-        //Result of the calculation
-        double result= 0.0;
+        final String existingString = editText.getText().toString();
 
-        // txtRes is a textbox of type string to show the resultant output and whose initial value is 0
-        prevNum = txtRes.getText().toString();
+        //Concatenate the existing string with the newly selected number (0 to 9).
+        final String finalValue = existingString+newlySelected;
+        //Set the EditText value with the updated String
 
-        // Assign the btn pressed value on the UI to the number
-        number = Double.parseDouble(btn.toString());
-
-        //Set the same number in the editValue field
-        editValues.setText(Double.toString(number));
-
-        if(Double.parseDouble(prevNum) == 0.0)
-        {
-            prevNum = Double.toString(number);
-        }
-        prev = Double.valueOf(prevNum);
-
-        // Check for the math operation
-        if (sign != null) {
-            result = calculate(sign, number, prev);
-            txtRes.setText(String.valueOf(result));
-        }
-        else
-            txtRes.setText(String.valueOf(number));
+        editText.setText(finalValue);
     }
 
     private double calculate(String operation, double number, double prevNum) {
