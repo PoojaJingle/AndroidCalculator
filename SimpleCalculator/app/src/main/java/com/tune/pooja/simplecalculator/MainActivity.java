@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             case R.id.btn0:
-                initNumber(editValues, btn1.getText().toString());
+                initNumber(editValues, btn0.getText().toString());
                 break;
             case R.id.btn1:
                 initNumber(editValues, btn1.getText().toString());
