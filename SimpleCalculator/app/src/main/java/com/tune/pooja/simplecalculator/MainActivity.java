@@ -9,10 +9,19 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnAdd, btnSubtract, btnMultiple, btnDivide, btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn0;
+    private Button btnAdd, btnSubtract, btnMultiple, btnDivide, btnResult, btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn0;
     private TextView txtRes;
     private EditText editValues;
     private String prevNum = Integer.toString(0), sign = null ;
+    private double  prev = 0.0;
+
+//    private View.OnClickListener myClickListener = new View.OnClickListener() {
+//
+//        @Override
+//        public void onClick(View view) {
+//
+//        }
+//    };
 
 
     @Override
@@ -29,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSubtract= (Button)findViewById(R.id.btnSubtract);
         btnMultiple = (Button)findViewById(R.id.btnMultiply);
         btnDivide = (Button)findViewById(R.id.btnDivide);
+        btnResult = (Button)findViewById(R.id.btnResult);
+
         btn0 = (Button)findViewById(R.id.btn0);
         btn1 = (Button)findViewById(R.id.btn1);
         btn2 = (Button)findViewById(R.id.btn2);
@@ -47,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSubtract.setOnClickListener(this);
         btnMultiple.setOnClickListener(this);
         btnDivide.setOnClickListener(this);
+        btnResult.setOnClickListener(this);
         btn0.setOnClickListener(this);
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
@@ -62,19 +74,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view){
+        // get the current number in the variable number and previous number in prev
+        double cur = 0.0;
         switch(view.getId()){
+
+
+            // make enums for the operators
             case R.id.btnAdd:
                 sign = "add";
+                prevNum = txtRes.getText().toString();
+                prev = Double.valueOf(prevNum);
+                editValues.setText(null);
+                txtRes.setText(null);
                 break;
             case R.id.btnSubtract:
                 sign = "sub";
+                prevNum = txtRes.getText().toString();
+                prev = Double.valueOf(prevNum);
+                editValues.setText(null);
+                txtRes.setText(null);
                 break;
             case R.id.btnMultiply:
                 sign = "mul";
+                prevNum = txtRes.getText().toString();
+                prev = Double.valueOf(prevNum);
+                editValues.setText(null);
+                txtRes.setText(null);
                 break;
             case R.id.btnDivide:
                 sign= "div";
+                prevNum = txtRes.getText().toString();
+                prev = Double.valueOf(prevNum);
+                editValues.setText(null);
+                txtRes.setText(null);
                 break;
+
+            case R.id.btnResult:
+                cur =  Double.valueOf(editValues.getText().toString());
+                calculate(sign,cur,prev);
+                editValues.setText(null);
+                    break;
+
 
             case R.id.btn0:
                 initNumber(editValues, btn1.getText().toString());
@@ -111,39 +151,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void initNumber(EditText editValues, String btn) {
+    private void initNumber(EditText editText, String newlySelected) {
 
-        // get the current number in the variable number and previous number in prev
-        double number = 0.0, prev = 0.0;
 
-        //Result of the calculation
-        double result= 0.0;
+            final String existingString = editText.getText().toString();
 
-        // txtRes is a textbox of type string to show the resultant output and whose initial value is 0
-        prevNum = txtRes.getText().toString();
+            //Concatenate the existing string with the newly selected number (0 to 9).
+            final String finalValue = existingString + newlySelected;
+            //Set the EditText value with the updated String
 
-        // Assign the btn pressed value on the UI to the number
-        number = Double.parseDouble(btn.toString());
+            editText.setText(finalValue);
 
-        //Set the same number in the editValue field
-        editValues.setText(Double.toString(number));
 
-        if(Double.parseDouble(prevNum) == 0.0)
-        {
-            prevNum = Double.toString(number);
-        }
-        prev = Double.valueOf(prevNum);
-
-        // Check for the math operation
-        if (sign != null) {
-            result = calculate(sign, number, prev);
-            txtRes.setText(String.valueOf(result));
-        }
-        else
-            txtRes.setText(String.valueOf(number));
+        txtRes.setText(editText.getText());
     }
 
-    private double calculate(String operation, double number, double prevNum) {
+    private void calculate(String operation, double number, double prevNum) {
        // Variable to store the resultant value of the calc
         double value =0;
 
@@ -164,8 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     value = 0.0;
                 break;
         }
-
-        return value;
+            txtRes.setText(Double.toString(value));
     }
 
 
