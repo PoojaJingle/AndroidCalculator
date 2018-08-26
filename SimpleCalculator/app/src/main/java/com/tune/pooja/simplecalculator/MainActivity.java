@@ -1,11 +1,15 @@
 package com.tune.pooja.simplecalculator;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.tune.ITune;
+import com.tune.Tune;
+import com.tune.TuneEvent;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,25 +38,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void init() {
 
-        btnAdd = (Button)findViewById(R.id.btnAdd);
-        btnSubtract= (Button)findViewById(R.id.btnSubtract);
-        btnMultiple = (Button)findViewById(R.id.btnMultiply);
-        btnDivide = (Button)findViewById(R.id.btnDivide);
-        btnResult = (Button)findViewById(R.id.btnResult);
+        btnAdd = findViewById(R.id.btnAdd);
+        btnSubtract = findViewById(R.id.btnSubtract);
+        btnMultiple = findViewById(R.id.btnMultiply);
+        btnDivide = findViewById(R.id.btnDivide);
+        btnResult = findViewById(R.id.btnResult);
 
-        btn0 = (Button)findViewById(R.id.btn0);
-        btn1 = (Button)findViewById(R.id.btn1);
-        btn2 = (Button)findViewById(R.id.btn2);
-        btn3 = (Button)findViewById(R.id.btn3);
-        btn4 = (Button)findViewById(R.id.btn4);
-        btn5 = (Button)findViewById(R.id.btn5);
-        btn6 = (Button)findViewById(R.id.btn6);
-        btn7 = (Button)findViewById(R.id.btn7);
-        btn8 = (Button)findViewById(R.id.btn8);
-        btn9 = (Button)findViewById(R.id.btn9);
+        btn0 = findViewById(R.id.btn0);
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
+        btn4 = findViewById(R.id.btn4);
+        btn5 = findViewById(R.id.btn5);
+        btn6 = findViewById(R.id.btn6);
+        btn7 = findViewById(R.id.btn7);
+        btn8 = findViewById(R.id.btn8);
+        btn9 = findViewById(R.id.btn9);
 
-        editValues = (EditText)findViewById(R.id.editValues);
-        txtRes = (TextView)findViewById(R.id.txtRes);
+        editValues = findViewById(R.id.editValues);
+        txtRes = findViewById(R.id.txtRes);
 
         btnAdd.setOnClickListener(this);
         btnSubtract.setOnClickListener(this);
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view){
         // get the current number in the variable number and previous number in prev
-        double cur = 0.0;
+        double cur;
         switch(view.getId()){
 
 
@@ -188,6 +192,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
             txtRes.setText(Double.toString(value));
+        if (value > 10) {
+            ITune tune = Tune.getInstance();
+            tune.setUserId("userId");
+            tune.measureEvent(new TuneEvent(TuneEvent.LEVEL_ACHIEVED).withLevel(5));
+        }
     }
 
 
